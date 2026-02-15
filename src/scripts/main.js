@@ -3,14 +3,18 @@
 // write code here
 const list = document.querySelectorAll('ul');
 
+function parseSalary(salaryString) {
+  return Number(salaryString.replace(/[$,]/g, ''));
+}
+
 function sortList(lists) {
   lists.forEach((ul) => {
     const items = Array.from(ul.querySelectorAll('li'));
 
     const sort = items.sort(
       (a, b) =>
-        Number(b.dataset.salary.replace(/[$,]/g, '')) -
-        Number(a.dataset.salary.replace(/[$,]/g, '')),
+        parseSalary(b.dataset.salary) -
+        parseSalary(a.dataset.salary),
     );
 
     sort.forEach((li) => ul.appendChild(li));
@@ -25,7 +29,7 @@ function getEmployees(lists) {
       result.push({
         name: li.textContent.trim(),
         position: li.dataset.position,
-        salary: Number(li.dataset.salary),
+        salary: parseSalary(li.dataset.salary),
         age: Number(li.dataset.age),
       });
     });
